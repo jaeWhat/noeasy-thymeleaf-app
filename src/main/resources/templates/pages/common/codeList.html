@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/main}">
+
+<head>
+    <title layout:fragment="title">Code Page</title>
+</head>
+
+<body>
+    <section layout:fragment="content">
+        <div class="page-header">
+            <h2>Code Page</h2>
+            <p>This is the Code page content.</p>
+        </div>
+        <table id="codeTable" class="table table-striped table-bordered hover"></table>
+    </section>
+
+    <section layout:fragment="script">
+        <script>
+            $(document).ready(async function () {
+                try {
+                    const response = await fetch('/api/common/code');
+                    const data = await response.json();
+
+					$('#codeTable').DataTable({
+                        data: data, // API에서 가져온 JSON 배열
+                        columns: [
+                            {
+                                title: "#",
+                                data: null,       // 행번호는 실제 데이터 컬럼과 매핑 X
+                                render: function (data, type, row, meta) {
+                                    return meta.row + 1; // 1부터 시작
+                                },
+                                orderable: false,
+                                searchable: false
+                            },
+                            {
+                                title: '<input type="checkbox" id="select-all">', // 전체 선택용 체크박스
+                                data: null,
+                                render: function (data, type, row) {
+                                    return '<input type="checkbox" class="row-checkbox">';
+                                },
+                                orderable: false,
+                                searchable: false
+                            },
+                            { title: "ID", data: "id", visible: false, searchable: false },
+                            { title: "Code Group", data: "commCodeGroup" },
+                            { title: "Code", data: "commCode" },
+                            { title: "Name", data: "commName" },
+                            { title: "Sort Seq", data: "sortSeq" },
+                            { title: "Use Flag", data: "useFlag" }
+                        ],
+                        pageLength: 20,           // 기본 페이지 표시
+                        lengthMenu: [20, 50, 100], // 페이지 선택 메뉴
+                        searching: true,          // 검색
+                        ordering: false,           // 컬럼 정렬
+                        stateSave: true,
+                        language: {
+                            info: "Total: _TOTAL_", // 문구 변경
+                            infoEmpty: "Total: 0", // 데이터 없을 때
+                            lengthMenu: "_MENU_",
+                            search: "검색:",
+                            infoFiltered: "",
+                        },
+                        dom: '<"top"<"top-left"i l><"top-center"f><"top-right">>rt<"bottom"p><"clear">',
+                        initComplete: function () {
+                            let api = this.api();
+                            
+                            // 전체 선택 이벤트
+                            $('#select-all').on('click', function(){
+                                var checked = this.checked;
+                                $('.row-checkbox').each(function() {
+                                    this.checked = checked;
+                                });
+                            });
+                            
+                            // Using API in callbacks
+                            api.on('click', 'tbody td', function () {
+                            	console.log(this);
+                                api.search(this.innerHTML).draw();
+                            });
+                        },
+                        buttons: [
+                            'colvis',
+                            'excel',
+                            'print'
+                        ]
+                    });
+                    
+                    // 검색창 옆에 등록 버튼 추가
+                    const $registerButton = $('<button>', {
+                        id: 'btnRegister',
+                        class: 'btn btn-primary btn-sm',
+                        text: '등록',
+                        click: function() {
+                            let table = $('#codeTable').DataTable();
+
+                            alert('등록 버튼 클릭!');
+                            // 여기에 모달 오픈이나 추가 로직 작성
+                            console.log(getSelectedRows());
+                        }
+                    });
+                    
+                    // 검색창 옆에 등록 버튼 추가
+                    const $deleteButton = $('<button>', {
+                        id: 'btnDelete',
+                        class: 'btn btn-primary btn-sm',
+                        text: '삭제',
+                        click: function() {
+                            let table = $('#codeTable').DataTable();
+
+                            alert('삭제 버튼 클릭!');
+                            // 여기에 모달 오픈이나 추가 로직 작성
+                            table.row('.selected').remove().draw(false);
+                        }
+                    });
+                    $('.top-right').append($registerButton);
+                    $('.top-right').append($deleteButton);
+                } catch (err) {
+                    console.error("데이터 로딩 실패:", err);
+                }
+            });
+            
+         	// 선택된 행 데이터 가져오기 예제
+            function getSelectedRows() {
+                let selectedData = [];
+                let table = $('#codeTable').DataTable();
+                table.rows().every(function() {
+                    let row = this.node();
+                    if ($(row).find('.row-checkbox').is(':checked')) {
+                        selectedData.push(this.data());
+                    }
+                });
+                return selectedData;
+            }
+        </script>
+    </section>
+</body>
+
+</html>

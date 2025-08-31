@@ -1,0 +1,44 @@
+/* 화면 전체 높이 확보 */
+html, body {
+	height: 100%;
+	margin: 0;
+}
+
+/* Flex Column Layout */
+body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	margin: 0;
+}
+
+/* Header 높이 고정 */
+header {
+	height: 68px;
+	border-bottom: 2px solid #000;
+}
+
+/* Active 메뉴 강조 */
+.nav-link.active {
+	font-weight: bold;
+	/* color: #0d6efd !important; */
+}
+
+/* main 영역이 남은 공간 채우기 */
+main[layout\:fragment="content"] {
+	margin-left: 0; /* Sidebar 너비 만큼 띄우기 */
+	padding: 1rem;
+}
+
+/* footer는 항상 하단 고정 */
+footer {
+	height: 60px;
+	flex-shrink: 0;
+	border-top: 2px solid #000;
+}
+
+section[layout\:fragment="content"] {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}

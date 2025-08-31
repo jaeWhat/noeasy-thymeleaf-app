@@ -1,0 +1,48 @@
+{"properties": [
+  {
+    "name": "ls.api.domain",
+    "type": "java.lang.String",
+    "description": "LS증권 API 호출 도메인",
+    "defaultValue": "https://openapi.ls-sec.co.kr:8080"
+  },
+  {
+    "name": "ls.stock.appkey",
+    "type": "java.lang.String",
+    "description": "LS증권 API App Key"
+  },
+  {
+    "name": "ls.stock.appsecretkey",
+    "type": "java.lang.String",
+    "description": "LS증권 API AppSecret Key"
+  },
+  {
+    "name": "upbit.server-url",
+    "type": "java.lang.String",
+    "description": "Upbit API 호출 도메인"
+  },
+  {
+    "name": "upbit.websocket-url",
+    "type": "java.lang.String",
+    "description": "Upbit 웹소켓 호출 도메인"
+  },
+  {
+    "name": "upbit.access-key",
+    "type": "java.lang.String",
+    "description": "Upbit API Access Key"
+  },
+  {
+    "name": "upbit.secret-key",
+    "type": "java.lang.String",
+    "description": "Upbit API Secret Key"
+  },
+  {
+    "name": "job.tickerJob.enabled",
+    "type": "java.lang.Boolean",
+    "description": "A description for 'job.tickerJob.enabled'"
+  },
+  {
+    "name": "job.strategyJob.enabled",
+    "type": "java.lang.Boolean",
+    "description": "A description for 'job.strategyJob.enabled'"
+  }
+]}

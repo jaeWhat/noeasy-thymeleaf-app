@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<body>
+    <section class="offcanvas-body" th:fragment="navMenu">
+        <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/}" aria-current="page"
+                    th:classappend="${currentPath == '/'} ? 'active'">Home</a>
+            </li>
+            <li class="nav-item">
+				<div>
+                <a class="nav-link" th:href="@{#}" aria-current="page"
+                    th:classappend="${currentPath == '/comm/#'} ? 'active'">Common</a>
+	                <a class="nav-link ms-4" th:href="@{/comm/code}" aria-current="page"
+	                    th:classappend="${currentPath == '/comm/code'} ? 'active'">Code</a>
+				</div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/about}" aria-current="page"
+                    th:classappend="${currentPath == '/about'} ? 'active'">About</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Test
+                </a>
+                <ul class="dropdown-menu dropdown-menu">
+                    <li>
+                        <a class="dropdown-item" th:href="@{/comm/code}"
+                            th:classappend="${currentPath == '/comm/code'} ? 'active'">Code</a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <!-- JS -->
+    <script th:src="@{/js/layouts/navMenuIndex.js}"></script>
+</body>
+
+</html>
