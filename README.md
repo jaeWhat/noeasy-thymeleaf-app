@@ -1,2 +1,2 @@
 # noeasy-thymeleaf-app
-Noeasy Spring + Thymeleaf App
+Noeasy Spring + Thymeleaf + Bootstrap App
